@@ -1,6 +1,7 @@
 import { Characteristics, Price } from "./product.interface";
 
 export class ProductModel {
+	_id: string;
 	image: string;
 	title: string;
 	price: Price;
