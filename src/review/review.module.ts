@@ -3,6 +3,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
 import { ReviewController } from './review.controller';
 import { ReviewModel } from './review.model/review.model';
 import { ReviewService } from './review.service';
+import { ReviewService } from './review.service';
 
 @Module({
   controllers: [ReviewController],
