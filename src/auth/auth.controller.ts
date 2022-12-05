@@ -2,6 +2,7 @@ import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 import { BadRequestException, Body, Controller, HttpCode, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ALREADY_EXISTS } from './dto/auth.constants';
+import { Types } from 'mongoose';
 
 @Controller('auth')
 export class AuthController {
@@ -24,7 +25,6 @@ export class AuthController {
 	@HttpCode(200)
 	@Post('login')
 	async login(@Body() dto: AuthDto) {
-		console.log(dto);
 		const user = await this.authService.validateUser(dto.login, dto.password);
 		return this.authService.login(user.email);
 	}
