@@ -1,17 +1,31 @@
+import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, HttpCode, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { ALREADY_EXISTS } from './dto/auth.constants';
+import { Types } from 'mongoose';
 
 @Controller('auth')
 export class AuthController {
+
+	constructor( private readonly authService: AuthService) {
+		
+	}
 	
+	@UsePipes(new ValidationPipe())
 	@Post('register')
 	async register(@Body() dto: AuthDto) {
-
+		console.log("1", dto);
+		const oldUser = await this.authService.findUser(dto.login);
+		if(oldUser) {
+			throw new BadRequestException(ALREADY_EXISTS);
+		}
+		return this.authService.createUser(dto);
 	}
 
 	@HttpCode(200)
 	@Post('login')
 	async login(@Body() dto: AuthDto) {
-
+		const user = await this.authService.validateUser(dto.login, dto.password);
+		return this.authService.login(user.email);
 	}
 } 
