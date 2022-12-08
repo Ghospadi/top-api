@@ -1,7 +1,7 @@
 FROM node:14-alpine
 WORKDIR /opt/app
 ADD package.json package.json
-RUN yarn insall
+RUN yarn install
 ADD . .
 RUN yarn build
 RUN yarn prune --production
