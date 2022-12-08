@@ -6,11 +6,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest]
     steps:
-      - uses: actions/checkout@master
-      - name: Publish to registry
-        uses: elgohr/Publish-Docker-Github-Action@master
+    - uses: actions/checkout@master
+    - name: Publish to registry
+      uses: elgohr/Publish-Docker-Github-Action@master
       with:
         registry: docker.pkg.github.com
         name: docker.pkg.github.com/Ghospadi/top-api/top-api
