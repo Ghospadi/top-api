@@ -1,4 +1,4 @@
-import { prop } from '@typegoose/typegoose';
+import { index, prop } from '@typegoose/typegoose';
 import { Base, TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 
 export enum TopLevelCategories {
@@ -16,10 +16,10 @@ export class HhData {
   Junior: number;
 
   @prop()
-	Middle: number;
+  Middle: number;
 
   @prop()
-	Senior: number;
+  Senior: number;
 }
 
 export class TopPageAdvantages {
@@ -27,10 +27,12 @@ export class TopPageAdvantages {
   title: string;
 
   @prop()
-	description: string;
+  description: string;
 }
 
 export interface TopPageModel extends Base {}
+
+@index({ '$**': 'text' })
 export class TopPageModel extends TimeStamps {
   @prop({ enum: TopLevelCategories })
   firstCategory: TopLevelCategories;
@@ -41,7 +43,7 @@ export class TopPageModel extends TimeStamps {
   @prop()
   title: string;
 
-  @prop({unique: true})
+  @prop({ unique: true })
   alias: string;
 
   @prop()
@@ -50,7 +52,7 @@ export class TopPageModel extends TimeStamps {
   @prop({ type: () => [HhData] })
   hh?: HhData;
 
-  @prop( { type: () => [TopPageAdvantages]} )
+  @prop({ type: () => [TopPageAdvantages] })
   advantages: TopPageAdvantages[];
 
   @prop()

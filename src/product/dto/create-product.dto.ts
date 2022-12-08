@@ -1,0 +1,54 @@
+import {Type} from 'class-transformer';
+import {IsArray, IsNumber, IsOptional, IsString, ValidateNested,} from 'class-validator';
+
+export class ProductPriceDto {
+    @IsOptional()
+    @IsNumber()
+    oldPrice?: number;
+
+    @IsNumber()
+    newPrice: number;
+
+    @IsNumber()
+    credit: number;
+}
+
+export class ProductCharacteristicDto {
+    @IsString()
+    name: string;
+    @IsString()
+    value: string;
+}
+
+export class CreateProductDto {
+    @IsString()
+    image: string;
+
+    @IsString()
+    title: string;
+
+    @ValidateNested()
+    @Type(() => ProductPriceDto)
+    price: ProductPriceDto;
+
+    @IsString()
+    description: string;
+
+    @IsString()
+    advantages: string;
+
+    @IsString()
+    disadvantages: string;
+
+    @IsString({each: true})
+    categories: string[];
+
+    @IsArray()
+    @IsString({each: true})
+    tags: string[];
+
+    @IsArray()
+    @ValidateNested()
+    @Type(() => ProductCharacteristicDto)
+    characteristics: ProductCharacteristicDto[];
+}
